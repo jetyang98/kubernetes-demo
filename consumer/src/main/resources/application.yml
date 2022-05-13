@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: consumer
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+    kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+        period: 5000

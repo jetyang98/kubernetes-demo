@@ -1,0 +1,40 @@
+# 定义Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: provider
+  labels:
+    app: provider
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: provider
+      labels:
+        app: provider
+    spec:
+      containers:
+        - name: provider
+          image: provider
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: provider
+
+---
+# 定义SVC
+apiVersion: v1
+kind: Service
+metadata:
+  name: provider
+spec:
+  selector:
+    app: provider
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30002
+  type: NodePort
